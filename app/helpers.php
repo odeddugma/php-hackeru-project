@@ -5,16 +5,14 @@ define('MYSQL_USER', 'root');
 define('MYSQL_PWD', '');
 define('MYSQL_DB', 'digg');
 
-/* function dd($data, $die = true){
+function dd($data, $die = true, $fn = 'print_r') // dd = dump and die
+{
   echo '<pre>';
-  print_r($data);
+  $fn($data);
   echo '</pre>';
-  if( $die ){
-    die;
-  } else {
-    echo '<hr>';
-  }
-} */
+  if ($die) die;
+  echo '<hr>';
+}
 
 function get_footer($page = 'footer')
 {

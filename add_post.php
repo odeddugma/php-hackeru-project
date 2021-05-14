@@ -4,7 +4,7 @@ session_start();
 
 if (!isset($_SESSION['user_id'])) {
 
-  header('location: signin.php');
+    header('location: signin.php');
 }
 
 require_once 'app/helpers.php';
@@ -13,32 +13,41 @@ $errors = ['title' => '', 'article' => '',];
 
 if (isset($_POST['submit'])) {
 
-  $title = !empty($_POST['title']) ? trim($_POST['title']) : '';
-  $article = !empty($_POST['article']) ? trim($_POST['article']) : '';
-  $form_valid = true;
+    // $title = !empty($_POST['title']) ? trim($_POST['title']) : '';
+    // $article = !empty($_POST['article']) ? trim($_POST['article']) : '';
 
-  if (!$title || mb_strlen($title) < 2) {
-    $errors['title'] = '* Title is required for at least 2 chars';
-    $form_valid = false;
-  }
+    $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+    $title = trim($title);
+    $article = filter_input(INPUT_POST, 'article', FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+    $article = trim($article);
+    $form_valid = true;
 
-  if (!$article || mb_strlen($article) < 2) {
-    $errors['article'] = '* Article is required for at least 2 chars';
-    $form_valid = false;
-  }
-
-  if ($form_valid) {
-
-    $uid = $_SESSION['user_id'];
-    $link = mysqli_connect(MYSQL_HOST, MYSQL_USER, MYSQL_PWD, MYSQL_DB);
-    $sql = "INSERT INTO posts VALUES(null, $uid, '$title', '$article', NOW())";
-    $result = mysqli_query($link, $sql);
-
-    if ($result && mysqli_affected_rows($link)) {
-
-      header('location: blog.php');
+    if (!$title || mb_strlen($title) < 2) {
+        $errors['title'] = '* Title is required for at least 2 chars';
+        $form_valid = false;
     }
-  }
+
+    if (!$article || mb_strlen($article) < 2) {
+        $errors['article'] = '* Article is required for at least 2 chars';
+        $form_valid = false;
+    }
+
+    if ($form_valid) {
+
+        $uid = $_SESSION['user_id'];
+        $link = mysqli_connect(MYSQL_HOST, MYSQL_USER, MYSQL_PWD, MYSQL_DB);
+
+        $title = mysqli_real_escape_string($link, $title);
+        $article = mysqli_real_escape_string($link, $article);
+
+        $sql = "INSERT INTO posts VALUES(null, $uid, '$title', '$article', NOW())";
+        $result = mysqli_query($link, $sql);
+
+        if ($result && mysqli_affected_rows($link)) {
+
+            header('location: blog.php');
+        }
+    }
 }
 
 ?>

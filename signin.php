@@ -12,8 +12,10 @@ $error = '';
 
 if (isset($_POST['submit'])) {
 
-  $email = !empty($_POST['email']) ? trim($_POST['email']) : '';
-  $password = !empty($_POST['password']) ? trim($_POST['password']) : '';
+  $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
+  $email = trim($email);
+  $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
+  $password = trim($password);
 
   if (!$email) {
     $error = '* Email is required';
@@ -22,6 +24,11 @@ if (isset($_POST['submit'])) {
   } else {
 
     $link = mysqli_connect(MYSQL_HOST, MYSQL_USER, MYSQL_PWD, MYSQL_DB);
+
+    // block sql injection / clean data from user
+    $email = mysqli_real_escape_string($link, $email);
+    $password = mysqli_real_escape_string($link, $password);
+
     $sql = "SELECT * FROM users WHERE email = '$email' AND password = '$password'";
     $result = mysqli_query($link, $sql);
 

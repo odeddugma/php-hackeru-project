@@ -1,0 +1,2 @@
+sql injection - mysqli_real_escape_string();
+xss attack (Cross Site Scripting Attack) - htmlentities() + filter_input();

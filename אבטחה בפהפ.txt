@@ -1,0 +1,7 @@
+SQL Injection - הזרקת שאילתת SQL
+-------------------------------------
+' OR '1' = '1' '
+פתרון - הפונקציה mysqli_real_escape_string
+
+
+xss attack (Cross Site Scripting Attack)
