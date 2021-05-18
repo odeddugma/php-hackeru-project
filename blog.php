@@ -4,7 +4,7 @@ session_start();
 require_once 'app/helpers.php';
 $page_title = 'Blog Page';
 $link = mysqli_connect(MYSQL_HOST, MYSQL_USER, MYSQL_PWD, MYSQL_DB);
-$sql = "SELECT u.name, p.* FROM posts AS p 
+$sql = "SELECT u.name, u.profile_image, p.* FROM posts AS p 
         JOIN users AS u ON p.user_id = u.id 
         ORDER BY p.date DESC";
 
@@ -35,7 +35,11 @@ $result = mysqli_query($link, $sql);
                 <div class="col-12 mt-3">
                     <div class="card">
                         <div class="card-header">
-                            <span><?= htmlentities($post['name']); ?></span>
+                            <span>
+                                <img width="100" height="100" class="rounded-circle"
+                                    src="images/<?= $post['profile_image']; ?>" alt="user profile picture">
+                            </span>
+                            <span class="ms-3"><?= htmlentities($post['name']); ?></span>
                             <span class="float-end"><?= date('d/m/Y H:m:s', strtotime($post['date'])); ?></span>
                         </div>
                         <div class="card-body">

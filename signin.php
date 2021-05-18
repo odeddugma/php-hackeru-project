@@ -29,21 +29,23 @@ if (isset($_POST['submit'])) {
     $email = mysqli_real_escape_string($link, $email);
     $password = mysqli_real_escape_string($link, $password);
 
-    $sql = "SELECT * FROM users WHERE email = '$email' AND password = '$password'";
+    $sql = "SELECT * FROM users WHERE email = '$email'";
     $result = mysqli_query($link, $sql);
 
     if ($result && mysqli_num_rows($result)) {
 
       $user = mysqli_fetch_assoc($result);
-      $_SESSION['user_name'] = $user['name'];
-      $_SESSION['user_id'] = $user['id'];
-      header('location: blog.php');
-    } else {
 
-      $error = '* Email or password are incorect';
+      if (password_verify($password, $user['password'])) {
+        $_SESSION['user_name'] = $user['name'];
+        $_SESSION['user_id'] = $user['id'];
+        header('location: blog.php');
+      } else {
+        $error = '* Email or password are incorect';
+      }
     }
   }
-}
+};
 
 ?>
 
