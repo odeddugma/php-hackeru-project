@@ -1,7 +1,0 @@
-sql injection - mysqli_real_escape_string();
-xss attack (Cross Site Scripting Attack) - htmlentities() + filter_input();
-password hash - password_hash() + password_verify();
-data fishing - https (ssl certificate).
-bad bots - .htaccess / cloudflare / firewall.
-dos / ddos - cloudflare / firewall.
-upload_files - check size + check extension + is_upload_file() + error = 0 + random name to prevent overwrite.
