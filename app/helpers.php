@@ -1,18 +1,18 @@
 <?php
 
-define('MYSQL_HOST', 'localhost');
+/* define('MYSQL_HOST', 'localhost');
 define('MYSQL_USER', 'root');
 define('MYSQL_PWD', '');
-define('MYSQL_DB', 'digg');
+define('MYSQL_DB', 'digg'); */
 
-function dd($data, $die = true, $fn = 'print_r') // dd = dump and die
+/* function dd($data, $die = true, $fn = 'print_r') // dd = dump and die
 {
   echo '<pre>';
   $fn($data);
   echo '</pre>';
   if ($die) die;
   echo '<hr>';
-}
+} */
 
 function get_footer($page = 'footer')
 {
@@ -25,7 +25,7 @@ function get_header($page = 'header')
   include "tpl/$page.php";
 }
 
-function old($fn)
+/* function old($fn)
 {
   return $_REQUEST[$fn] ?? '';
 }
@@ -60,4 +60,4 @@ function generateRandomString($length = 30)
   }
 
   return $randomString;
-}
+} */
